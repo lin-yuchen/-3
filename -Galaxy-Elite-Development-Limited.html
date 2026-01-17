@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>升捷發展有限公司 - Galaxy Elite Development Limited</title>
+    <meta name="description" content="升捷發展有限公司提供专业的货运服务，包括陆运、海运、空运，以及报关、保险、仓储等一站式物流解决方案。">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        /* 语言切换按钮样式 */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            padding: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: #333;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(25, 113, 194, 0.1);
+        }
+        
+        .lang-btn.active {
+            background: #1971c2;
+            color: white;
+        }
+        
+        /* 繁体文本隐藏 */
+        .lang-zh-Hant {
+            display: none;
+        }
+        
+        /* 语言图标 */
+        .lang-icon {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+    </style>
+    <script>
+        // 简繁体转换数据
+        const simplifiedToTraditional = {
+            '升捷发展有限公司': '升捷發展有限公司',
+            'Galaxy Elite Development Limited': 'Galaxy Elite Development Limited',
+            '专业货运服务': '專業貨運服務',
+            '关于我们': '關於我們',
+            '服务项目': '服務項目',
+            '运输网络': '運輸網絡',
+            '我们的优势': '我們的優勢',
+            '合作伙伴': '合作夥伴',
+            '联系我们': '聯繫我們',
+            '粤ICP备2025041696号-1': '粵ICP備2025041696號-1',
+            '首页': '首頁',
+            '公司简介': '公司簡介',
+            '发展历程': '發展歷程',
+            '团队实力': '團隊實力',
+            '货运服务': '貨運服務',
+            '陆运服务': '陸運服務',
+            '海运服务': '海運服務',
+            '空运服务': '空運服務',
+            '报关服务': '報關服務',
+            '保险服务': '保險服務',
+            '仓储服务': '倉儲服務',
+            '华南地区': '華南地區',
+            '华东地区': '華東地區',
+            '华北地区': '華北地區',
+            '香港本地': '香港本地',
+            '网络覆盖': '網絡覆蓋',
+            '可靠性': '可靠性',
+            '效率': '效率',
+            '合作关系': '合作關係',
+            '支持服务': '支持服務',
+            '客户评价': '客戶評價',
+            '实时追踪': '實時追蹤',
+            '物流查询': '物流查詢',
+            '获取报价': '獲取報價',
+            '升捷发展有限公司是一家专业的货运服务提供商': '升捷發展有限公司是一家專業的貨運服務提供商',
+            '总部位于香港': '總部位於香港',
+            '我们致力于为客户提供高效': '我們致力於為客戶提供高效',
+            '可靠的物流解决方案': '可靠的物流解決方案',
+            '提供一站式的物流服务': '提供一站式的物流服務',
+            '包括陆运': '包括陸運',
+            '海运': '海運',
+            '空运以及报关': '空運以及報關',
+            '保险': '保險',
+            '仓储等增值服务': '倉儲等增值服務',
+            '我们的团队由经验丰富的物流专家组成': '我們的團隊由經驗豐富的物流專家組成',
+            '确保每一票货物都能安全': '確保每一票貨物都能安全',
+            '准时地送达目的地': '準時地送達目的地',
+            '我们拥有完善的运输网络': '我們擁有完善的運輸網絡',
+            '覆盖中国各大主要城市': '覆蓋中國各大主要城市',
+            '以及东南亚': '以及東南亞',
+            '欧美等国际航线': '歐美等國際航線',
+            '无论您的货物需要国内运输还是国际运输': '無論您的貨物需要國內運輸還是國際運輸',
+            '升捷发展都能为您提供最优质的服务': '升捷發展都能為您提供最優質的服務',
+            '我们坚持以客户为中心': '我們堅持以客戶為中心',
+            '以诚信为根本': '以誠信為根本',
+            '不断优化服务流程': '不斷優化服務流程',
+            '提升服务质量': '提升服務質量',
+            '与多家知名企业建立了长期合作关系': '與多家知名企業建立了長期合作關係',
+            '成为客户信赖的物流合作伙伴': '成為客戶信賴的物流合作夥伴',
+            '选择升捷发展': '選擇升捷發展',
+            '选择专业': '選擇專業',
+            '选择安心': '選擇安心',
+            '香港总部': '香港總部',
+            '地址': '地址',
+            '电话': '電話',
+            '邮箱': '郵箱',
+            '客服热线': '客服熱線',
+            '周一至周五': '週一至週五',
+            '周六': '週六',
+            '周日': '週日',
+            '立即咨询': '立即諮詢',
+            '立即联系': '立即聯繫',
+            '查看详情': '查看詳情',
+            '了解更多': '了解更多',
+            '阅读更多': '閱讀更多',
+            '提交': '提交',
+            '重置': '重置',
+            '姓名': '姓名',
+            '公司': '公司',
+            '电话': '電話',
+            '邮箱': '郵箱',
+            '货物类型': '貨物類型',
+            '出发地': '出發地',
+            '目的地': '目的地',
+            '重量': '重量',
+            '体积': '體積',
+            '备注': '備註',
+            '发送消息': '發送消息',
+            '服务热线': '服務熱線',
+            '微信咨询': '微信諮詢',
+            'WhatsApp咨询': 'WhatsApp諮詢',
+            '关注我们': '關注我們',
+            '官方公众号': '官方公眾號',
+            '小红书': '小紅書',
+            '版权': '版權',
+            '版权所有': '版權所有',
+            '隐私政策': '隱私政策',
+            '使用条款': '使用條款',
+            '网站地图': '網站地圖',
+            '团队运输': '團隊運輸',
+            '高效陆运': '高效陸運',
+            '专业包装': '專業包裝',
+            '国际海运': '國際海運',
+            '桥梁运输': '橋樑運輸',
+            '客户服务': '客戶服務',
+            '本地网络': '本地網絡',
+            '公路运输': '公路運輸',
+            '航空运输': '航空運輸',
+            '国际海运覆盖': '國際海運覆蓋',
+            '可靠安全': '可靠安全',
+            '高效准时': '高效準時',
+            '合作共赢': '合作共贏',
+            '全天候支持': '全天候支持'
+        };
+        
+        // 初始化语言设置
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取保存的语言设置
+            const savedLang = localStorage.getItem('preferredLanguage') || 'zh-Hans';
+            setLanguage(savedLang);
+            
+            // 绑定语言切换按钮事件
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    setLanguage(lang);
+                    localStorage.setItem('preferredLanguage', lang);
+                });
+            });
+        });
+        
+        // 设置语言函数
+        function setLanguage(lang) {
+            // 更新按钮状态
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // 显示/隐藏对应的语言文本
+            if (lang === 'zh-Hans') {
+                document.querySelectorAll('.lang-zh-Hans').forEach(el => {
+                    el.style.display = 'block';
+                });
+                document.querySelectorAll('.lang-zh-Hant').forEach(el => {
+                    el.style.display = 'none';
+                });
+            } else {
+                document.querySelectorAll('.lang-zh-Hans').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.querySelectorAll('.lang-zh-Hant').forEach(el => {
+                    el.style.display = 'block';
+                });
+            }
+        }
+        
+        // 简繁转换函数（备用方案）
+        function convertToTraditional() {
+            const walker = document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            let node;
+            while (node = walker.nextNode()) {
+                let text = node.nodeValue;
+                let converted = text;
+                
+                for (const [simplified, traditional] of Object.entries(simplifiedToTraditional)) {
+                    converted = converted.replace(new RegExp(simplified, 'g'), traditional);
+                }
+                
+                if (converted !== text) {
+                    node.nodeValue = converted;
+                }
+            }
+        }
+        
+        function convertToSimplified() {
+            const walker = document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            let node;
+            while (node = walker.nextNode()) {
+                let text = node.nodeValue;
+                let converted = text;
+                
+                for (const [simplified, traditional] of Object.entries(simplifiedToTraditional)) {
+                    converted = converted.replace(new RegExp(traditional, 'g'), simplified);
+                }
+                
+                if (converted !== text) {
+                    node.nodeValue = converted;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- 语言切换按钮 -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="zh-Hans">
+            <span class="lang-icon">🇨🇳</span>简体
+        </button>
+        <button class="lang-btn" data-lang="zh-Hant">
+            <span class="lang-icon">🇭🇰</span>繁体
+        </button>
+    </div>
+    
+    <!-- 轮播图部分 -->
+    <div class="carousel">
+        <div class="slide slide-1" style="--bg-image: url('../JPG/carousel/carousel-01.jpg');">
+            <div class="overlay"></div>
+            <div class="slide-content">
+                <h1 class="lang-zh-Hans">专业货运服务 连接全球网络</h1>
+                <h1 class="lang-zh-Hant" style="display: none;">專業貨運服務 連接全球網絡</h1>
+                <p class="lang-zh-Hans">升捷发展有限公司 - 您信赖的物流合作伙伴</p>
+                <p class="lang-zh-Hant" style="display: none;">升捷發展有限公司 - 您信賴的物流合作夥伴</p>
+                <a href="#contact" class="btn-primary lang-zh-Hans">立即咨询</a>
+                <a href="#contact" class="btn-primary lang-zh-Hant" style="display: none;">立即諮詢</a>
+            </div>
+        </div>
+        
+        <div class="slide slide-2" style="--bg-image: url('../JPG/carousel/carousel-02.jpg');">
+            <div class="overlay"></div>
+            <div class="slide-content">
+                <h1 class="lang-zh-Hans">高效陆运解决方案</h1>
+                <h1 class="lang-zh-Hant" style="display: none;">高效陸運解決方案</h1>
+                <p class="lang-zh-Hans">覆盖全国各大城市的陆运网络</p>
+                <p class="lang-zh-Hant" style="display: none;">覆蓋全國各大城市的陸運網絡</p>
+                <a href="#services" class="btn-primary lang-zh-Hans">查看详情</a>
+                <a href="#services" class="btn-primary lang-zh-Hant" style="display: none;">查看詳情</a>
+            </div>
+        </div>
+        
+        <div class="slide slide-3" style="--bg-image: url('../JPG/carousel/carousel-03.jpg');">
+            <div class="overlay"></div>
+            <div class="slide-content">
+                <h1 class="lang-zh-Hans">专业团队 值得信赖</h1>
+                <h1 class="lang-zh-Hant" style="display: none;">專業團隊 值得信賴</h1>
+                <p class="lang-zh-Hans">经验丰富的物流专家为您服务</p>
+                <p class="lang-zh-Hant" style="display: none;">經驗豐富的物流專家為您服務</p>
+                <a href="#about" class="btn-primary lang-zh-Hans">了解更多</a>
+                <a href="#about" class="btn-primary lang-zh-Hant" style="display: none;">了解更多</a>
+            </div>
+        </div>
+        
+        <div class="slide slide-4" style="--bg-image: url('../JPG/carousel/carousel-04.jpg');">
+            <div class="overlay"></div>
+            <div class="slide-content">
+                <h1 class="lang-zh-Hans">国际海运服务</h1>
+                <h1 class="lang-zh-Hant" style="display: none;">國際海運服務</h1>
+                <p class="lang-zh-Hans">连接全球港口的专业海运方案</p>
+                <p class="lang-zh-Hant" style="display: none;">連接全球港口的專業海運方案</p>
+                <a href="#network" class="btn-primary lang-zh-Hans">查看网络</a>
+                <a href="#network" class="btn-primary lang-zh-Hant" style="display: none;">查看網絡</a>
+            </div>
+        </div>
+        
+        <div class="slide slide-5" style="--bg-image: url('../JPG/carousel/carousel-05.jpg');">
+            <div class="overlay"></div>
+            <div class="slide-content">
+                <h1 class="lang-zh-Hans">现代化运输车队</h1>
+                <h1 class="lang-zh-Hant" style="display: none;">現代化運輸車隊</h1>
+                <p class="lang-zh-Hans">安全、准时、高效的货物运输</p>
+                <p class="lang-zh-Hant" style="display: none;">安全、準時、高效的貨物運輸</p>
+                <a href="#advantages" class="btn-primary lang-zh-Hans">我们的优势</a>
+                <a href="#advantages" class="btn-primary lang-zh-Hant" style="display: none;">我們的優勢</a>
+            </div>
+        </div>
+        
+        <div class="carousel-controls">
+            <button class="prev">‹</button>
+            <div class="indicators">
+                <span class="indicator active"></span>
+                <span class="indicator"></span>
+                <span class="indicator"></span>
+                <span class="indicator"></span>
+                <span class="indicator"></span>
+            </div>
+            <button class="next">›</button>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>升捷發展有限公司</h1>
+                <p>Galaxy Elite Development Limited</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="lang-zh-Hans">首页</a><a href="#home" class="lang-zh-Hant" style="display: none;">首頁</a></li>
+                <li><a href="#about" class="lang-zh-Hans">关于我们</a><a href="#about" class="lang-zh-Hant" style="display: none;">關於我們</a></li>
+                <li><a href="#services" class="lang-zh-Hans">服务项目</a><a href="#services" class="lang-zh-Hant" style="display: none;">服務項目</a></li>
+                <li><a href="#network" class="lang-zh-Hans">运输网络</a><a href="#network" class="lang-zh-Hant" style="display: none;">運輸網絡</a></li>
+                <li><a href="#advantages" class="lang-zh-Hans">我们的优势</a><a href="#advantages" class="lang-zh-Hant" style="display: none;">我們的優勢</a></li>
+                <li><a href="#partners" class="lang-zh-Hans">合作伙伴</a><a href="#partners" class="lang-zh-Hant" style="display: none;">合作夥伴</a></li>
+                <li><a href="#contact" class="lang-zh-Hans">联系我们</a><a href="#contact" class="lang-zh-Hant" style="display: none;">聯繫我們</a></li>
+            </ul>
+            <button class="menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- 服务卡片部分 -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title lang-zh-Hans">我们的服务项目</h2>
+            <h2 class="section-title lang-zh-Hant" style="display: none;">我們的服務項目</h2>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="../JPG/services/service-team.jpg" alt="团队运输">
+                    <h3 class="lang-zh-Hans">团队运输</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">團隊運輸</h3>
+                    <p class="lang-zh-Hans">专业的物流团队，确保货物安全准时送达</p>
+                    <p class="lang-zh-Hant" style="display: none;">專業的物流團隊，確保貨物安全準時送達</p>
+                </div>
+                
+                <div class="service-card">
+                    <img src="../JPG/services/service-transport.jpg" alt="高效陆运">
+                    <h3 class="lang-zh-Hans">高效陆运</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">高效陸運</h3>
+                    <p class="lang-zh-Hans">覆盖全国的陆运网络，提供门到门服务</p>
+                    <p class="lang-zh-Hant" style="display: none;">覆蓋全國的陸運網絡，提供門到門服務</p>
+                </div>
+                
+                <div class="service-card">
+                    <img src="../JPG/services/service-packaging.jpg" alt="专业包装">
+                    <h3 class="lang-zh-Hans">专业包装</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">專業包裝</h3>
+                    <p class="lang-zh-Hans">根据不同货物类型提供专业包装方案</p>
+                    <p class="lang-zh-Hant" style="display: none;">根據不同貨物類型提供專業包裝方案</p>
+                </div>
+                
+                <div class="service-card">
+                    <img src="../JPG/services/service-shipping.jpg" alt="国际海运">
+                    <h3 class="lang-zh-Hans">国际海运</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">國際海運</h3>
+                    <p class="lang-zh-Hans">连接全球主要港口的集装箱运输服务</p>
+                    <p class="lang-zh-Hant" style="display: none;">連接全球主要港口的集裝箱運輸服務</p>
+                </div>
+                
+                <div class="service-card">
+                    <img src="../JPG/services/service-bridge.jpg" alt="桥梁运输">
+                    <h3 class="lang-zh-Hans">桥梁运输</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">橋樑運輸</h3>
+                    <p class="lang-zh-Hans">连接香港与内地的跨境运输解决方案</p>
+                    <p class="lang-zh-Hant" style="display: none;">連接香港與內地的跨境運輸解決方案</p>
+                </div>
+                
+                <div class="service-card">
+                    <img src="../JPG/services/service-customer.jpg" alt="客户服务">
+                    <h3 class="lang-zh-Hans">客户服务</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">客戶服務</h3>
+                    <p class="lang-zh-Hans">7x24小时客服支持，实时追踪货物状态</p>
+                    <p class="lang-zh-Hant" style="display: none;">7x24小時客服支持，實時追蹤貨物狀態</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 运输网络部分 -->
+    <section id="network" class="network">
+        <div class="container">
+            <h2 class="section-title lang-zh-Hans">我们的运输网络</h2>
+            <h2 class="section-title lang-zh-Hant" style="display: none;">我們的運輸網絡</h2>
+            
+            <div class="network-content">
+                <div class="network-text">
+                    <h3 class="lang-zh-Hans">覆盖全国的物流网络</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">覆蓋全國的物流網絡</h3>
+                    <p class="lang-zh-Hans">我们拥有完善的运输网络，覆盖中国各大主要城市，包括华南、华东、华北地区的主要经济中心。</p>
+                    <p class="lang-zh-Hant" style="display: none;">我們擁有完善的運輸網絡，覆蓋中國各大主要城市，包括華南、華東、華北地區的主要經濟中心。</p>
+                    
+                    <div class="network-features">
+                        <div class="feature">
+                            <img src="../JPG/network/network-local.jpg" alt="本地网络">
+                            <h4 class="lang-zh-Hans">香港本地网络</h4>
+                            <h4 class="lang-zh-Hant" style="display: none;">香港本地網絡</h4>
+                        </div>
+                        <div class="feature">
+                            <img src="../JPG/network/network-road.jpg" alt="公路运输">
+                            <h4 class="lang-zh-Hans">公路运输</h4>
+                            <h4 class="lang-zh-Hant" style="display: none;">公路運輸</h4>
+                        </div>
+                        <div class="feature">
+                            <img src="../JPG/network/network-bridge2.jpg" alt="航空运输">
+                            <h4 class="lang-zh-Hans">航空运输</h4>
+                            <h4 class="lang-zh-Hant" style="display: none;">航空運輸</h4>
+                        </div>
+                        <div class="feature">
+                            <img src="../JPG/network/network-shipping2.jpg" alt="国际海运">
+                            <h4 class="lang-zh-Hans">国际海运覆盖</h4>
+                            <h4 class="lang-zh-Hant" style="display: none;">國際海運覆蓋</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 优势部分 -->
+    <section id="advantages" class="advantages">
+        <div class="container">
+            <h2 class="section-title lang-zh-Hans">我们的优势</h2>
+            <h2 class="section-title lang-zh-Hant" style="display: none;">我們的優勢</h2>
+            
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <div class="advantage-icon">✓</div>
+                    <h3 class="lang-zh-Hans">可靠安全</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">可靠安全</h3>
+                    <p class="lang-zh-Hans">严格的货物管理流程，确保每一票货物安全送达</p>
+                    <p class="lang-zh-Hant" style="display: none;">嚴格的貨物管理流程，確保每一票貨物安全送達</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">⚡</div>
+                    <h3 class="lang-zh-Hans">高效准时</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">高效準時</h3>
+                    <p class="lang-zh-Hans">优化的运输路线，确保货物准时到达目的地</p>
+                    <p class="lang-zh-Hant" style="display: none;">優化的運輸路線，確保貨物準時到達目的地</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">🤝</div>
+                    <h3 class="lang-zh-Hans">合作共赢</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">合作共贏</h3>
+                    <p class="lang-zh-Hans">与客户建立长期合作关系，共同成长</p>
+                    <p class="lang-zh-Hant" style="display: none;">與客戶建立長期合作關係，共同成長</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">📞</div>
+                    <h3 class="lang-zh-Hans">全天候支持</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">全天候支持</h3>
+                    <p class="lang-zh-Hans">7x24小时客服支持，随时解答您的疑问</p>
+                    <p class="lang-zh-Hant" style="display: none;">7x24小時客服支持，隨時解答您的疑問</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 合作伙伴部分 -->
+    <section id="partners" class="partners">
+        <div class="container">
+            <h2 class="section-title lang-zh-Hans">我们的合作伙伴</h2>
+            <h2 class="section-title lang-zh-Hant" style="display: none;">我們的合作夥伴</h2>
+            
+            <div class="partners-grid">
+                <div class="partner-logo">
+                    <img src="../JPG/partners/partner-shein.png" alt="SHEIN">
+                </div>
+                <div class="partner-logo">
+                    <img src="../JPG/partners/partner-cainiao.gif" alt="菜鸟物流">
+                </div>
+                <div class="partner-logo">
+                    <img src="../JPG/partners/partner-ouhua.png" alt="欧华物流">
+                </div>
+                <div class="partner-logo">
+                    <img src="../JPG/partners/partner-sf-express.png" alt="顺丰速运">
+                </div>
+                <div class="partner-logo">
+                    <img src="../JPG/partners/partner-honghaihui.jpg" alt="鸿海会">
+                </div>
+                <div class="partner-logo">
+                    <img src="../JPG/partners/partner-pinduoduo.png" alt="拼多多">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系表单部分 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title lang-zh-Hans">联系我们</h2>
+            <h2 class="section-title lang-zh-Hant" style="display: none;">聯繫我們</h2>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3 class="lang-zh-Hans">香港总部</h3>
+                    <h3 class="lang-zh-Hant" style="display: none;">香港總部</h3>
+                    
+                    <div class="info-item">
+                        <strong class="lang-zh-Hans">地址：</strong>
+                        <strong class="lang-zh-Hant" style="display: none;">地址：</strong>
+                        <span>香港九龙观塘道XX号XX大厦XX室</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <strong class="lang-zh-Hans">电话：</strong>
+                        <strong class="lang-zh-Hant" style="display: none;">電話：</strong>
+                        <span>+852 XXXX XXXX</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <strong class="lang-zh-Hans">邮箱：</strong>
+                        <strong class="lang-zh-Hant" style="display: none;">郵箱：</strong>
+                        <span>info@galaxyelite.com.hk</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <strong class="lang-zh-Hans">客服热线：</strong>
+                        <strong class="lang-zh-Hant" style="display: none;">客服熱線：</strong>
+                        <span>+852 XXXX XXXX</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <strong class="lang-zh-Hans">工作时间：</strong>
+                        <strong class="lang-zh-Hant" style="display: none;">工作時間：</strong>
+                        <span class="lang-zh-Hans">周一至周五 9:00-18:00<br>周六 9:00-13:00<br>周日休息</span>
+                        <span class="lang-zh-Hant" style="display: none;">週一至週五 9:00-18:00<br>週六 9:00-13:00<br>週日休息</span>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <img src="../JPG/qr/qr_wechat_friend.png" alt="微信咨询" class="qr-code">
+                            <span class="lang-zh-Hans">微信咨询</span>
+                            <span class="lang-zh-Hant" style="display: none;">微信諮詢</span>
+                        </a>
+                        <a href="#" class="social-link">
+                            <img src="../JPG/qr/qr_whatsapp.png" alt="WhatsApp咨询" class="qr-code">
+                            <span class="lang-zh-Hans">WhatsApp咨询</span>
+                            <span class="lang-zh-Hant" style="display: none;">WhatsApp諮詢</span>
+                        </a>
+                        <a href="#" class="social-link">
+                            <img src="../JPG/qr/qr_wechat_official.png" alt="官方公众号" class="qr-code">
+                            <span class="lang-zh-Hans">官方公众号</span>
+                            <span class="lang-zh-Hant" style="display: none;">官方公眾號</span>
+                        </a>
+                        <a href="#" class="social-link">
+                            <img src="../JPG/qr/qr_xiaohongshu.png" alt="小红书" class="qr-code">
+                            <span class="lang-zh-Hans">小红书</span>
+                            <span class="lang-zh-Hant" style="display: none;">小紅書</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="公司">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="电话" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="邮箱" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="留言" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary lang-zh-Hans">发送消息</button>
+                        <button type="submit" class="btn-primary lang-zh-Hant" style="display: none;">發送消息</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>升捷發展有限公司</h3>
+                    <p>Galaxy Elite Development Limited</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 class="lang-zh-Hans">快速链接</h4>
+                    <h4 class="lang-zh-Hant" style="display: none;">快速連結</h4>
+                    <ul>
+                        <li><a href="#home" class="lang-zh-Hans">首页</a><a href="#home" class="lang-zh-Hant" style="display: none;">首頁</a></li>
+                        <li><a href="#about" class="lang-zh-Hans">关于我们</a><a href="#about" class="lang-zh-Hant" style="display: none;">關於我們</a></li>
+                        <li><a href="#services" class="lang-zh-Hans">服务项目</a><a href="#services" class="lang-zh-Hant" style="display: none;">服務項目</a></li>
+                        <li><a href="#contact" class="lang-zh-Hans">联系我们</a><a href="#contact" class="lang-zh-Hant" style="display: none;">聯繫我們</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 class="lang-zh-Hans">服务项目</h4>
+                    <h4 class="lang-zh-Hant" style="display: none;">服務項目</h4>
+                    <ul>
+                        <li><a href="#" class="lang-zh-Hans">陆运服务</a><a href="#" class="lang-zh-Hant" style="display: none;">陸運服務</a></li>
+                        <li><a href="#" class="lang-zh-Hans">海运服务</a><a href="#" class="lang-zh-Hant" style="display: none;">海運服務</a></li>
+                        <li><a href="#" class="lang-zh-Hans">空运服务</a><a href="#" class="lang-zh-Hant" style="display: none;">空運服務</a></li>
+                        <li><a href="#" class="lang-zh-Hans">报关服务</a><a href="#" class="lang-zh-Hant" style="display: none;">報關服務</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4 class="lang-zh-Hans">联系方式</h4>
+                    <h4 class="lang-zh-Hant" style="display: none;">聯繫方式</h4>
+                    <p class="lang-zh-Hans">电话：+852 XXXX XXXX</p>
+                    <p class="lang-zh-Hant" style="display: none;">電話：+852 XXXX XXXX</p>
+                    <p class="lang-zh-Hans">邮箱：info@galaxyelite.com.hk</p>
+                    <p class="lang-zh-Hant" style="display: none;">郵箱：info@galaxyelite.com.hk</p>
+                    <p class="lang-zh-Hans">地址：香港九龙观塘道XX号XX大厦XX室</p>
+                    <p class="lang-zh-Hant" style="display: none;">地址：香港九龍觀塘道XX號XX大廈XX室</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="lang-zh-Hans">© 2024 升捷发展有限公司. 版权所有. 粤ICP备2025041696号-1</p>
+                <p class="lang-zh-Hant" style="display: none;">© 2024 升捷發展有限公司. 版權所有. 粵ICP備2025041696號-1</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 轮播图功能
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === index ? 'block' : 'none';
+            });
+            
+            indicators.forEach((indicator, i) => {
+                indicator.classList.toggle('active', i === index);
+            });
+            
+            currentSlide = index;
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        // 初始化轮播图
+        document.querySelector('.next').addEventListener('click', nextSlide);
+        document.querySelector('.prev').addEventListener('click', prevSlide);
+        
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => showSlide(index));
+        });
+        
+        // 自动轮播
+        setInterval(nextSlide, 5000);
+        
+        // 移动端菜单切换
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('show');
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // 表单提交
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('感谢您的留言，我们会尽快联系您！');
+            this.reset();
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if(this.getAttribute('href') === '#') return;
+                
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
